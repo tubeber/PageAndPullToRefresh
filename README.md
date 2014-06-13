@@ -18,7 +18,7 @@ ListView效果分两种类型：
 
 1：普通的列表，包含分页加载和下拉刷新
 
-![Screenshot](https://github.com/tubeber/PageAndPullToRefresh/blob/master/demo/res/drawable-hdpi/screenshot01.png)
+![Screenshot](https://raw.githubusercontent.com/tubeber/PageAndPullToRefresh/master/demo/res/drawable-hdpi/screenshot01.png)
 
 Layout
 ``` xml
@@ -34,7 +34,7 @@ Layout
 ```
 2：图片拉伸的列表，包含分页加载和下拉刷新。类似于QQ空间效果
 
-![Screenshot](https://github.com/tubeber/PageAndPullToRefresh/blob/master/demo/res/drawable-hdpi/screenshot02.png)
+![Screenshot](https://raw.githubusercontent.com/tubeber/PageAndPullToRefresh/master/demo/res/drawable-hdpi/screenshot02.png)
 
 ``` java
 // 此方法设置浮动插件，比如头像天气等
