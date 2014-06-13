@@ -16,7 +16,7 @@ An android open source for ListView with paging request and pull to refresh acti
 ```
 ListView效果分两种类型：
 
-1：普通的列表，包含分页加载和下拉刷新
+##1：普通的列表，包含分页加载和下拉刷新
 
 ![Screenshot](https://raw.githubusercontent.com/tubeber/PageAndPullToRefresh/master/demo/res/drawable-hdpi/screenshot02.png)
 
@@ -32,8 +32,8 @@ Layout
         refresh:pageDemandingEnable="true"
         refresh:refreshable="true" />
 ```
-2：图片拉伸的列表，包含分页加载和下拉刷新。类似于QQ空间效果
 
+##2：图片拉伸的列表，包含分页加载和下拉刷新。类似于QQ空间效果
 ![Screenshot](https://raw.githubusercontent.com/tubeber/PageAndPullToRefresh/master/demo/res/drawable-hdpi/screenshot01.png)
 
 ``` java
