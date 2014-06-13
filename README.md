@@ -1,5 +1,7 @@
 PageAndPullToRefresh
-An android open source for ListView with paging request and pull to refresh actions
+An android open source for ListView with paging request and pull to refresh actions.
+
+The project's encoding is utf-8
 
 封装了分页请求和下拉刷新的全部过程，开发者只需要关注ListView子项视图的绘制和ListView数据源的请求。 整个页面的逻辑处理变得非常非常简单
 
