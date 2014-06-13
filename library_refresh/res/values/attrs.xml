@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <declare-styleable name="PageAndRefreshListView">
+        <attr name="refreshable" format="boolean" />
+        <attr name="pageDemandingEnable" format="boolean" />
+        <attr name="noLinkImage" format="reference" />
+        <attr name="noDataImage" format="reference" />
+        <attr name="noDataGravity" format="integer" />
+        <attr name="noLinkGravity" format="integer" />
+    </declare-styleable>
+    <declare-styleable name="PageAndImageRefreshListView">
+        <attr name="image_refreshable" format="boolean" />
+        <attr name="image_pageDemandingEnable" format="boolean" />
+        <attr name="image_noLinkImage" format="reference" />
+        <attr name="image_noDataImage" format="reference" />
+        <attr name="image_noDataGravity" format="integer" />
+        <attr name="image_noLinkGravity" format="integer" />
+        <attr name="image_headimage" format="reference" />
+    </declare-styleable>
+</resources>

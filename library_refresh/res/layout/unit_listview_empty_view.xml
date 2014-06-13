@@ -1,0 +1,78 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/compListEmptyView"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent" >
+
+    <LinearLayout
+        android:id="@+id/llCompRequestEmptyViewRetry"
+        android:layout_width="wrap_content"
+        android:layout_height="120dip"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="135dip"
+        android:gravity="center|bottom"
+        android:orientation="vertical"
+        android:visibility="invisible" >
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="30dip"
+            android:gravity="center"
+            android:paddingLeft="15dip"
+            android:paddingRight="15dip"
+            android:text="@string/check_network"
+            android:textColor="#000000" />
+
+        <Button
+            android:id="@+id/btnCompRequestEmptyView"
+            android:layout_width="80dip"
+            android:layout_height="35dip"
+            android:layout_marginTop="15dip"
+            android:text="@string/retry"
+            android:textColor="#ffffff" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/llCompRequestEmptyViewLoading"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerInParent="true"
+        android:gravity="center"
+        android:orientation="vertical"
+        android:paddingBottom="80dip"
+        android:visibility="visible" >
+
+        <ProgressBar
+            android:layout_width="70dip"
+            android:layout_height="70dip"
+            android:fadingEdge="none"/>
+
+        <TextView
+            android:layout_width="160dip"
+            android:layout_height="30dip"
+            android:gravity="center"
+            android:paddingLeft="10dip"
+            android:text="@string/loading"
+            android:textColor="#000000"
+            android:visibility="invisible" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/emptyViewNoData"
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent"
+        android:gravity="center"
+        android:orientation="vertical"
+        android:visibility="invisible" >
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/emptyViewNoLink"
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent"
+        android:gravity="center"
+        android:orientation="vertical"
+        android:visibility="invisible" >
+    </LinearLayout>
+
+</RelativeLayout>
