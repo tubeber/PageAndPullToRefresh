@@ -51,5 +51,7 @@ public class IndexActivity extends Activity {
 		mApiNames.add("ImagePageListView");
 		mApiActivityNames.add("com.king.demo.activity.ImagePageListViewActivity");
 
+		mApiNames.add("WaterfallListView");
+		mApiActivityNames.add("com.king.demo.activity.ImageWaterfallPageListViewActivity");
 	}
 }

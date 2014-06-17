@@ -143,14 +143,14 @@ public abstract class PageAndRefreshBaseAdapter extends BaseAdapter implements
 			return false;
 		}
 		
-		// 正使用的fake数据
-		if(isFake && getAllData() != null && !getAllData().isEmpty() && getAllData().get(0) instanceof FakeData){
-			return false; 
-		}
-		
 		//正在加载
 		if(mIsLoading){
 			return false;
+		}
+		
+		// 正使用的fake数据
+		if(isFake && getAllData() != null && !getAllData().isEmpty() && getAllData().get(0) instanceof FakeData){
+			return false; 
 		}
 		
 		if(lastVisiblePosition == DIRECTLY_REQUEST){

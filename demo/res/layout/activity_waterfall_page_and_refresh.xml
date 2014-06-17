@@ -1,0 +1,25 @@
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    xmlns:refresh="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/content"
+    android:layout_width="match_parent"
+    android:background="@color/white"
+    android:layout_height="match_parent"
+    android:orientation="vertical" >
+
+    <com.king.refresh.widget.waterfall.PageAndRefreshImageWaterfallListView
+        android:id="@+id/demo_page_list"
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent"
+        android:fadingEdge="none"
+        android:fadingEdgeLength="0px"
+        android:scrollbars="none"
+        android:divider="@color/gray"
+        android:dividerHeight="0.5dip"
+        refresh:pageDemandingEnable="true"
+        android:overScrollMode="never"
+        refresh:refreshable="true"
+        refresh:columnNumber="2"
+        refresh:landscapeColumnNumber="3"/>
+
+</LinearLayout>

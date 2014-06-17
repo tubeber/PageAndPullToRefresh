@@ -65,8 +65,11 @@
         android:fadingEdge="none"
         android:fadingEdgeLength="0px"
         android:scrollbars="none"
+        android:divider="@color/gray"
+        android:dividerHeight="0.5dip"
         refresh:pageDemandingEnable="true"
         android:overScrollMode="never"
-        refresh:refreshable="true" />
+        refresh:refreshable="true"
+        android:scrollingCache="false" />
 
 </LinearLayout>

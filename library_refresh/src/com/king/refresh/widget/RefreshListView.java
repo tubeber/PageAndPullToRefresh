@@ -7,7 +7,6 @@ import java.util.Locale;
 
 import android.content.Context;
 import android.util.AttributeSet;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.MotionEvent;
 import android.view.View;
@@ -236,7 +235,6 @@ public class RefreshListView extends ListView implements OnScrollListener {
         mArrowDownAnim = (RotateAnimation) AnimationUtils.loadAnimation(context, R.anim.refresh_arrow_down);
         mArrowUpAnim = (RotateAnimation) AnimationUtils.loadAnimation(context, R.anim.refresh_arrow_up);
     
-        setOnScrollListener(this);
     }
 
     
@@ -245,9 +243,6 @@ public class RefreshListView extends ListView implements OnScrollListener {
         if (isRefreshable) { 
 	    	switch (event.getAction()) {
 	    	 	case MotionEvent.ACTION_DOWN:
-	    	 	Log.v("test", "mHeadView.getTop "+mHeadView.getTop());
-	    	 	Log.v("test", "mFirstVisibleItem "+mFirstVisibleItem);
-	    	 	Log.v("test", "mRefreshState "+(mRefreshState == REFRESH_DONE));
 		        if (mFirstVisibleItem ==0 && mRefreshState == REFRESH_DONE && mHeadView.getTop() == 0) {
 		            isRecored = true;
 		

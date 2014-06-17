@@ -1,4 +1,4 @@
-package com.king.refresh.widget;
+package com.king.refresh.widget.waterfall;
 
 import android.content.Context;
 import android.content.res.TypedArray;
@@ -7,8 +7,6 @@ import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.AbsListView;
-import android.widget.AbsListView.OnScrollListener;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
@@ -19,14 +17,16 @@ import android.widget.TextView;
 import com.king.refresh.OnViewUpdateListener;
 import com.king.refresh.PageAndRefreshController;
 import com.king.refresh.R;
+import com.king.refresh.widget.waterfall.internal.WaterfallAbsListView;
+import com.king.refresh.widget.waterfall.internal.WaterfallAbsListView.OnScrollListener;
 
 /**
  * 分页请求ListView效果类,绑定适配器自动请求第一页<br>
  * 
- * @author King
+ * @author 13071499
  * @since 2013/11/26 11:30
  */
-public class PageAndRefreshListView extends RefreshListView implements
+public class PageAndRefreshImageWaterfallListView extends RefreshImageWaterfallListView implements
 		OnScrollListener, OnViewUpdateListener {
 
 	/**
@@ -55,6 +55,11 @@ public class PageAndRefreshListView extends RefreshListView implements
 	private PageAndRefreshController mController;
 
 	/**
+     * 滑动监听器
+     */
+    private OnNewScrollListener scrollListener;
+	
+	/**
 	 * 分页加载功能是否可用
 	 */
 	private boolean mIsEnable = true;
@@ -62,7 +67,7 @@ public class PageAndRefreshListView extends RefreshListView implements
 	/**
 	 * 分页是否加锁禁用
 	 */
-	private boolean mIsPageLock;
+	private boolean mIsPageClock;
 	
 	/**
 	 * 空视图
@@ -99,11 +104,11 @@ public class PageAndRefreshListView extends RefreshListView implements
 	 */
 	private int mFooterViewHight;
 
-	public PageAndRefreshListView(Context context) {
+	public PageAndRefreshImageWaterfallListView(Context context) {
 		this(context, null);
 	}
 
-	public PageAndRefreshListView(Context context, AttributeSet attrs,
+	public PageAndRefreshImageWaterfallListView(Context context, AttributeSet attrs,
 			int defStyle) {
 		super(context, attrs, defStyle);
 		mContext = context;
@@ -117,30 +122,42 @@ public class PageAndRefreshListView extends RefreshListView implements
         arr.recycle();
 	}
 
-	public PageAndRefreshListView(Context context, AttributeSet attrs) {
+	public PageAndRefreshImageWaterfallListView(Context context, AttributeSet attrs) {
 		this(context, attrs, 0);
 	}
 
 	@Override
-	public void onScrollStateChanged(AbsListView view, int scrollState) {
+	public void onScrollStateChanged(WaterfallAbsListView view, int scrollState) {
+		// 调用新的滑动监听器
+		if(scrollListener != null){
+			scrollListener.onScrollStateChanged(view, scrollState);
+		}
 	}
 
 	@Override
-	public void onScroll(AbsListView view, int firstVisibleItem,
+	public void onScroll(WaterfallAbsListView view, int firstVisibleItem,
 			int visibleItemCount, int totalItemCount) {
+		// 调用新的滑动监听器
+		if(scrollListener != null){
+			scrollListener.onScroll(view, firstVisibleItem, visibleItemCount, totalItemCount);
+		}
+		
 		//验证是否可分页
-		if (mIsEnable && mController != null && mController.isPageRequestEnable(view.getLastVisiblePosition())) {
+		if (mIsEnable && mController.isPageRequestEnable(view.getLastVisiblePosition())) {
 			mController.requestPage();
 		}else{
 			//验证是否可下拉刷新
 			super.onScroll(view, firstVisibleItem, visibleItemCount, totalItemCount);
 		}
-		
 	}
 
 	@Override
 	protected void onLayout(boolean changed, int l, int t, int r, int b) {
 		super.onLayout(changed, l, t, r, b);
+	}
+	
+	public void setOnNewScrollListener(OnNewScrollListener scrollListener) {
+		this.scrollListener = scrollListener;
 	}
 	
 	@Override
@@ -152,12 +169,10 @@ public class PageAndRefreshListView extends RefreshListView implements
 		if (adapter instanceof PageAndRefreshController) {
 			mController = (PageAndRefreshController) adapter;
 			mController.setOnViewUpdateListener(this);
-		}else{
-			return;
 		}
 		//先请求第一页，然后设置分页滑动监听器
 		mController.requestPage();
-		super.setOnScrollListener(this);
+		this.setOnScrollListener(this);
 	}
 
 	@Override
@@ -191,7 +206,7 @@ public class PageAndRefreshListView extends RefreshListView implements
 	@Override
 	public void beforeRefresh() {
 		// 刷新之前 禁用分页加载
-		mIsPageLock = mIsEnable ? true : false;
+		mIsPageClock = mIsEnable ? true : false;
 		mIsEnable = false;
 		//隐藏footerView
 		updateFooterView(FOOTERVIEW_GONE);
@@ -200,38 +215,20 @@ public class PageAndRefreshListView extends RefreshListView implements
 	@Override
 	public void afterRefresh(boolean isSuccess) {
 		// 刷新之后  解除禁用分页加载
-		mIsEnable = mIsPageLock ? true : false;
+		mIsEnable = mIsPageClock ? true : false;
 		//设置刷新完成
 		onRefreshComplete(isSuccess);
 	}
 	
 	/**
-	 * 功能描述: 设置分页加载功能是否可用<br>
+	 * 功能描述: 设置分页加载功能是否可用,必须在 {@link #setAdapter(ListAdapter)} 后调用<br>
 	 * 
 	 * @param isEnable
 	 */
 	public void setPageDemandingEnable(boolean isEnable) {
-		mIsEnable = isEnable;
-	}
-	
-	/**
-	 * 功能描述:添加列表无数据视图 <br><br>
-	 * 必须在 {@link #setAdapter(ListAdapter)} 之前调用
-	 * @param resId
-	 * @param gravity
-	 */
-	public void addNoDataView(int resId, int gravity){
-		this.addNoDataView(LayoutInflater.from(mContext).inflate(resId, null), gravity);
-	}
-	
-	/**
-	 * 功能描述:添加无网络连接视图 <br><br>
-	 * 必须在 {@link #setAdapter(ListAdapter)} 之前调用
-	 * @param view
-	 * @param gravity
-	 */
-	public void addNoLinkView(int resId, int gravity){
-		this.addNoLinkView(LayoutInflater.from(mContext).inflate(resId, null), gravity);
+		if (mController != null) {
+			mIsEnable = isEnable;
+		}
 	}
 	
 	/**
@@ -310,11 +307,6 @@ public class PageAndRefreshListView extends RefreshListView implements
 	 * @param context
 	 */
 	public void initListView() {
-		// 添加标记，只初始化一次
-		if(mEmptyView != null){
-			return;
-		}
-		
 		setEmptyView(R.layout.unit_listview_empty_view);
 		setFootView(R.layout.unit_listview_foot_view);
 		
@@ -397,9 +389,8 @@ public class PageAndRefreshListView extends RefreshListView implements
 	 * 
 	 * @param ResId
 	 */
-	private void setFootView(int ResId) {
-		mFooterView = LayoutInflater.from(mContext).inflate(
-				R.layout.unit_listview_foot_view, null);
+	private void setFootView(int resId) {
+		mFooterView = LayoutInflater.from(mContext).inflate(resId, null);
 		final FootViewHolder footViewHolder = new FootViewHolder();
 		// 初始化底部View控件
 		footViewHolder.pbFootView = (ProgressBar) mFooterView
